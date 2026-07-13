@@ -29,12 +29,12 @@
 <style id="lv-anim">
   @keyframes lvFadeUp { from {opacity:0; transform:translateY(24px)} to {opacity:1; transform:none} }
   @keyframes lvFadeIn { from {opacity:0} to {opacity:1} }
-  html.lv-loading body { opacity: 0; }
-  body.lv-body-in { animation: lvFadeIn .9s cubic-bezier(.4,0,.2,1) both; }
+  html.lv-loading #root { opacity: 0; }
+  #root.lv-body-in { animation: lvFadeIn .9s cubic-bezier(.4,0,.2,1) both; }
   .lv-reveal { opacity: 0; }
   .lv-reveal.lv-in { animation: lvFadeUp .7s cubic-bezier(.2,.7,.2,1) both; }
   @media (prefers-reduced-motion: reduce) {
-    body, .lv-reveal.lv-in { animation: none !important; opacity: 1 !important; transform: none !important; }
+    #root, .lv-reveal.lv-in { animation: none !important; opacity: 1 !important; transform: none !important; }
   }
 </style>
 <style id="app-loader-style">
@@ -137,7 +137,8 @@
     var wait = Math.max(0, MIN_LOADER_MS - elapsed);
     setTimeout(function(){
       document.documentElement.classList.remove('lv-loading');
-      document.body.classList.add('lv-body-in');
+      var rootEl = document.getElementById('root');
+      if (rootEl) rootEl.classList.add('lv-body-in');
     }, wait);
   }
   if (document.readyState === 'complete') hideLoader();
