@@ -109,7 +109,15 @@
 <script>
 (function(){
   document.documentElement.classList.add('lv-loading');
-  window.addEventListener('load', function(){ document.documentElement.classList.remove('lv-loading'); });
+  var MIN_LOADER_MS = 1800;
+  var startTime = Date.now();
+  function hideLoader(){
+    var elapsed = Date.now() - startTime;
+    var wait = Math.max(0, MIN_LOADER_MS - elapsed);
+    setTimeout(function(){ document.documentElement.classList.remove('lv-loading'); }, wait);
+  }
+  if (document.readyState === 'complete') hideLoader();
+  else window.addEventListener('load', hideLoader);
   var SEL = 'section, header, footer, article, h1, h2, h3, .card, [class*="card"], [class*="Card"], img, picture, figure, .hero, [class*="hero"]';
   function tag(root){
     root.querySelectorAll(SEL).forEach(function(el){
