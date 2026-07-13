@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pl"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Przykład — mechanika</title>
+<style>html,body{margin:0;padding:0;background:transparent;}body{font-family:system-ui,sans-serif;}</style>
+</head><body>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;">Animowany przykład rozwiązywania belki statycznie wyznaczalnej — reakcje podporowe wyliczane krok po kroku w formie odręcznych notatek.</h2>
+<div style="max-width:420px;margin:0 auto;">
+  <div style="background:radial-gradient(circle at 80% 85%, #1c3a56 0%, #0d1f34 45%, #060e1a 100%); border-radius:20px;padding:28px 28px 32px;position:relative;overflow:hidden;">
+    <div style="display:inline-block;background:rgba(93,202,165,0.15);color:#9FE1CB;font-size:12px;font-weight:500;padding:4px 12px;border-radius:20px;margin-bottom:18px;letter-spacing:0.03em;">PRZYKŁAD · MECHANIKA</div>
+
+    <svg viewBox="0 0 380 132" style="width:100%;height:auto;display:block;margin-bottom:8px;">
+      <g class="anim-beam">
+        <line x1="30" y1="50" x2="350" y2="50" stroke="rgba(255,255,255,0.9)" stroke-width="4" stroke-linecap="round"></line>
+        <path d="M 18 72 L 30 50 L 42 72 Z" fill="none" stroke="rgba(255,255,255,0.65)" stroke-width="2"></path>
+        <path d="M 338 72 L 350 50 L 362 72 Z" fill="none" stroke="rgba(255,255,255,0.65)" stroke-width="2"></path>
+        <line x1="14" y1="76" x2="46" y2="76" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"></line>
+        <line x1="334" y1="76" x2="366" y2="76" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"></line>
+      </g>
+      <g class="anim-load">
+        <line x1="137" y1="14" x2="137" y2="47" stroke="#5DCAA5" stroke-width="3" marker-end="url(#at)"></line>
+        <text x="137" y="10" text-anchor="middle" style="fill:#ffffff;font-size:13px;font-family:'Caveat',cursive;font-weight:600;">P = 10 kN</text>
+        <line x1="30" y1="105" x2="350" y2="105" stroke="rgba(255,255,255,0.35)" stroke-width="1"></line>
+        <line x1="30" y1="101" x2="30" y2="109" stroke="rgba(255,255,255,0.45)" stroke-width="1"></line>
+        <line x1="137" y1="101" x2="137" y2="109" stroke="rgba(255,255,255,0.45)" stroke-width="1"></line>
+        <line x1="350" y1="101" x2="350" y2="109" stroke="rgba(255,255,255,0.45)" stroke-width="1"></line>
+        <text x="83" y="122" text-anchor="middle" style="fill:rgba(255,255,255,0.65);font-size:11px;">2 m</text>
+        <text x="243" y="122" text-anchor="middle" style="fill:rgba(255,255,255,0.65);font-size:11px;">4 m</text>
+      </g>
+      <g class="anim-reactionB">
+        <line x1="30" y1="95" x2="30" y2="70" stroke="#5DCAA5" stroke-width="3" marker-end="url(#at)"></line>
+      </g>
+      <g class="anim-reactionA">
+        <line x1="350" y1="95" x2="350" y2="70" stroke="#5DCAA5" stroke-width="3" marker-end="url(#at)"></line>
+      </g>
+      <defs>
+        <marker id="at" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#5DCAA5"></path></marker>
+      </defs>
+    </svg>
+
+    <div style="font-family:'Caveat',cursive; font-size:23px; font-weight:600; color:rgba(255,255,255,0.92); line-height:1.5;">
+      <p class="anim-eq1" style="margin:6px 0;">ΣM_A = 0</p>
+      <p class="anim-eq2" style="margin:6px 0;">R_B · 6 − 10 · 2 = 0</p>
+      <p class="anim-eq3" style="margin:6px 0;">R_B = 3.3 kN</p>
+      <p class="anim-eq4" style="margin:6px 0;">R_A = 10 − 3.3 = 6.7 kN</p>
+    </div>
+
+    <div class="anim-badge" style="display:inline-block;background:rgba(93,202,165,0.18);color:#9FE1CB;font-size:13px;font-weight:500;padding:5px 14px;border-radius:20px;margin-top:10px;">✓ rozwiązane</div>
+  </div>
+</div>
+
+<style>
+  .anim-beam,.anim-load,.anim-reactionA,.anim-reactionB,.anim-eq1,.anim-eq2,.anim-eq3,.anim-eq4,.anim-badge{opacity:0;}
+  .anim-beam{animation:kfBeam 10s ease-in-out infinite;}
+  .anim-load{animation:kfLoad 10s ease-in-out infinite;}
+  .anim-eq1{animation:kfEq1 10s ease-out infinite;}
+  .anim-eq2{animation:kfEq2 10s ease-out infinite;}
+  .anim-eq3{animation:kfEq3 10s ease-out infinite;}
+  .anim-reactionB{animation:kfEq3b 10s ease-out infinite;}
+  .anim-eq4{animation:kfEq4 10s ease-out infinite;}
+  .anim-reactionA{animation:kfEq4b 10s ease-out infinite;}
+  .anim-badge{animation:kfBadge 10s ease-out infinite;}
+
+  @keyframes kfBeam { 0%{opacity:0;} 8%{opacity:1;} 88%{opacity:1;} 92%{opacity:0;} 100%{opacity:0;} }
+  @keyframes kfLoad { 0%,10%{opacity:0;} 18%{opacity:1;} 88%{opacity:1;} 92%{opacity:0;} 100%{opacity:0;} }
+  @keyframes kfEq1 { 0%,18%{opacity:0;transform:translateY(4px);} 26%{opacity:1;transform:translateY(0);} 88%{opacity:1;} 92%{opacity:0;} 100%{opacity:0;} }
+  @keyframes kfEq2 { 0%,28%{opacity:0;transform:translateY(4px);} 36%{opacity:1;transform:translateY(0);} 88%{opacity:1;} 92%{opacity:0;} 100%{opacity:0;} }
+  @keyframes kfEq3 { 0%,38%{opacity:0;transform:translateY(4px);} 46%{opacity:1;transform:translateY(0);} 88%{opacity:1;} 92%{opacity:0;} 100%{opacity:0;} }
+  @keyframes kfEq3b { 0%,38%{opacity:0;} 46%{opacity:1;} 88%{opacity:1;} 92%{opacity:0;} 100%{opacity:0;} }
+  @keyframes kfEq4 { 0%,48%{opacity:0;transform:translateY(4px);} 56%{opacity:1;transform:translateY(0);} 88%{opacity:1;} 92%{opacity:0;} 100%{opacity:0;} }
+  @keyframes kfEq4b { 0%,48%{opacity:0;} 56%{opacity:1;} 88%{opacity:1;} 92%{opacity:0;} 100%{opacity:0;} }
+  @keyframes kfBadge { 0%,60%{opacity:0;transform:scale(0.9);} 68%{opacity:1;transform:scale(1);} 86%{opacity:1;} 92%{opacity:0;} 100%{opacity:0;} }
+</style></body></html>
