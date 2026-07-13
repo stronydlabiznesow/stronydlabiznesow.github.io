@@ -25,7 +25,45 @@
     />
     <script type="module" crossorigin src="./assets/index-CX8W1Aa7.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index--LYf9_Ll.css">
-  </head>
+  
+<style id="lv-anim">
+  @keyframes lvFadeUp { from {opacity:0; transform:translateY(24px)} to {opacity:1; transform:none} }
+  @keyframes lvFadeIn { from {opacity:0} to {opacity:1} }
+  html.lv-loading body { opacity: 0; }
+  body { animation: lvFadeIn .6s ease-out both; }
+  .lv-reveal { opacity: 0; }
+  .lv-reveal.lv-in { animation: lvFadeUp .7s cubic-bezier(.2,.7,.2,1) both; }
+  @media (prefers-reduced-motion: reduce) {
+    body, .lv-reveal.lv-in { animation: none !important; opacity: 1 !important; transform: none !important; }
+  }
+</style>
+<script>
+(function(){
+  document.documentElement.classList.add('lv-loading');
+  window.addEventListener('load', function(){ document.documentElement.classList.remove('lv-loading'); });
+  var SEL = 'section, header, footer, article, h1, h2, h3, .card, [class*="card"], [class*="Card"], img, picture, figure, .hero, [class*="hero"]';
+  function tag(root){
+    root.querySelectorAll(SEL).forEach(function(el){
+      if (el.closest('.lv-fab')) return;
+      if (!el.classList.contains('lv-reveal')) el.classList.add('lv-reveal');
+    });
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting){ e.target.classList.add('lv-in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  function observe(){ document.querySelectorAll('.lv-reveal:not(.lv-in)').forEach(function(el){ io.observe(el); }); }
+  function boot(){ tag(document); observe(); }
+  if (document.readyState !== 'loading') boot(); else document.addEventListener('DOMContentLoaded', boot);
+  var mo = new MutationObserver(function(muts){
+    muts.forEach(function(m){ m.addedNodes && m.addedNodes.forEach(function(n){ if (n.nodeType===1){ tag(n); observe(); } }); });
+  });
+  mo.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
+
+</head>
   <body>
     <div id="root"></div>
     <a href="https://wa.me/48000000000" target="_blank" rel="noopener" aria-label="WhatsApp" style="position:fixed;right:20px;bottom:20px;z-index:9999;display:flex;align-items:center;justify-content:center;width:60px;height:60px;border-radius:50%;background:var(--mint,#5DCAA5);box-shadow:0 8px 24px rgba(0,0,0,.2);text-decoration:none;">
