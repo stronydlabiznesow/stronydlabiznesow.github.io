@@ -29,7 +29,8 @@
 <style id="lv-anim">
   @keyframes lvFadeUp { from {opacity:0; transform:translateY(24px)} to {opacity:1; transform:none} }
   @keyframes lvFadeIn { from {opacity:0} to {opacity:1} }
-  body { animation: lvFadeIn .6s ease-out both; }
+  html.lv-loading body { opacity: 0; }
+  body.lv-body-in { animation: lvFadeIn .9s cubic-bezier(.4,0,.2,1) both; }
   .lv-reveal { opacity: 0; }
   .lv-reveal.lv-in { animation: lvFadeUp .7s cubic-bezier(.2,.7,.2,1) both; }
   @media (prefers-reduced-motion: reduce) {
@@ -129,12 +130,15 @@
 <script>
 (function(){
   document.documentElement.classList.add('lv-loading');
-  var MIN_LOADER_MS = 3300;
+  var MIN_LOADER_MS = 3950;
   var startTime = Date.now();
   function hideLoader(){
     var elapsed = Date.now() - startTime;
     var wait = Math.max(0, MIN_LOADER_MS - elapsed);
-    setTimeout(function(){ document.documentElement.classList.remove('lv-loading'); }, wait);
+    setTimeout(function(){
+      document.documentElement.classList.remove('lv-loading');
+      document.body.classList.add('lv-body-in');
+    }, wait);
   }
   if (document.readyState === 'complete') hideLoader();
   else window.addEventListener('load', hideLoader);
