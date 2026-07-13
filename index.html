@@ -21,7 +21,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&family=Alex+Brush&family=Cormorant+Garamond:ital@1&display=swap"
     />
     <script type="module" crossorigin src="./assets/index-CX8W1Aa7.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index--LYf9_Ll.css">
@@ -29,12 +29,81 @@
 <style id="lv-anim">
   @keyframes lvFadeUp { from {opacity:0; transform:translateY(24px)} to {opacity:1; transform:none} }
   @keyframes lvFadeIn { from {opacity:0} to {opacity:1} }
-  html.lv-loading body { opacity: 0; }
   body { animation: lvFadeIn .6s ease-out both; }
   .lv-reveal { opacity: 0; }
   .lv-reveal.lv-in { animation: lvFadeUp .7s cubic-bezier(.2,.7,.2,1) both; }
   @media (prefers-reduced-motion: reduce) {
     body, .lv-reveal.lv-in { animation: none !important; opacity: 1 !important; transform: none !important; }
+  }
+</style>
+<style id="app-loader-style">
+  #app-loader{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:#0d1a34;
+    opacity:1;
+    visibility:visible;
+    transition:opacity .5s ease;
+  }
+  html:not(.lv-loading) #app-loader{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+  }
+  #app-loader .al-wrap{
+    position:relative;
+    display:inline-block;
+  }
+  #app-loader .al-ghost, #app-loader .al-ink{
+    font-family:'Alex Brush',cursive;
+    font-weight:400;
+    font-size:clamp(56px, 10vw, 108px);
+    white-space:nowrap;
+    line-height:1.15;
+    letter-spacing:0.01em;
+    padding:0 6px;
+  }
+  #app-loader .al-ghost{
+    color:rgba(255,255,255,0.07);
+  }
+  #app-loader .al-ink{
+    position:absolute;
+    left:0;
+    top:0;
+    color:#ffffff;
+    text-shadow:0 0 18px rgba(255,255,255,0.25);
+    clip-path:inset(0 100% 0 0);
+    animation:alWriteText 3.6s cubic-bezier(.65,.05,.36,1) infinite;
+  }
+  #app-loader .al-tagline{
+    position:absolute;
+    bottom:14%;
+    left:50%;
+    transform:translateX(-50%);
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:19px;
+    letter-spacing:0.08em;
+    color:rgba(159,225,203,0.85);
+    opacity:0;
+    animation:alTagFade 3.6s ease infinite;
+  }
+  @keyframes alWriteText{
+    0%{clip-path:inset(0 100% 0 0);}
+    8%{clip-path:inset(0 100% 0 0);}
+    62%{clip-path:inset(0 0 0 0);}
+    100%{clip-path:inset(0 0 0 0);}
+  }
+  @keyframes alTagFade{
+    0%,60%{opacity:0; transform:translateX(-50%) translateY(6px);}
+    75%{opacity:1; transform:translateX(-50%) translateY(0);}
+    92%{opacity:1;}
+    100%{opacity:0;}
   }
 </style>
 <script>
@@ -65,6 +134,13 @@
 
 </head>
   <body>
+    <div id="app-loader" aria-hidden="true">
+      <div class="al-wrap">
+        <span class="al-ghost">Klaudia Pipiórka</span>
+        <span class="al-ink">Klaudia Pipiórka</span>
+      </div>
+      <div class="al-tagline">korepetycje z matematyki i mechaniki</div>
+    </div>
     <div id="root"></div>
     <a href="https://wa.me/48694072521" target="_blank" rel="noopener" aria-label="WhatsApp" style="position:fixed;right:20px;bottom:20px;z-index:9999;display:flex;align-items:center;justify-content:center;width:60px;height:60px;border-radius:50%;background:var(--primary);box-shadow:0 8px 24px rgba(0,0,0,.2);text-decoration:none;">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="var(--primary-foreground,#ffffff)" aria-hidden="true" style="display:block;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zM20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.36.101 11.943c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652a11.882 11.882 0 0 0 5.71 1.447h.006c6.585 0 11.946-5.362 11.949-11.945a11.874 11.874 0 0 0-3.48-8.4"/></svg>
