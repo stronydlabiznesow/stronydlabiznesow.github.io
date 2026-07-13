@@ -48,25 +48,41 @@
     background:#0d1a34;
     opacity:1;
     visibility:visible;
-    transition:opacity .5s ease;
+    transition:opacity .9s cubic-bezier(.4,0,.2,1), filter .9s cubic-bezier(.4,0,.2,1), transform .9s cubic-bezier(.4,0,.2,1);
+    filter:blur(0);
+    transform:scale(1);
   }
   html:not(.lv-loading) #app-loader{
     opacity:0;
+    filter:blur(8px);
+    transform:scale(1.04);
     visibility:hidden;
     pointer-events:none;
   }
   #app-loader .al-wrap{
     position:relative;
     display:inline-block;
+    max-width:92vw;
   }
   #app-loader .al-ghost, #app-loader .al-ink{
     font-family:'Alex Brush',cursive;
     font-weight:400;
-    font-size:clamp(56px, 10vw, 108px);
+    font-size:clamp(30px, 13vw, 108px);
     white-space:nowrap;
     line-height:1.15;
     letter-spacing:0.01em;
     padding:0 6px;
+  }
+  @media (max-width: 420px){
+    #app-loader .al-ghost, #app-loader .al-ink{
+      font-size:clamp(26px, 11.5vw, 60px);
+    }
+    #app-loader .al-tagline{
+      font-size:15px;
+      white-space:normal;
+      width:78vw;
+      max-width:78vw;
+    }
   }
   #app-loader .al-ghost{
     color:rgba(255,255,255,0.07);
@@ -85,10 +101,14 @@
     bottom:14%;
     left:50%;
     transform:translateX(-50%);
+    width:max-content;
+    max-width:88vw;
+    text-align:center;
     font-family:'Cormorant Garamond', serif;
     font-style:italic;
     font-size:19px;
     letter-spacing:0.08em;
+    white-space:nowrap;
     color:rgba(159,225,203,0.85);
     opacity:0;
     animation:alTagFade 3.6s ease infinite;
